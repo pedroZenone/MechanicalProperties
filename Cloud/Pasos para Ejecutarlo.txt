@@ -1,0 +1,39 @@
+Descripcion de archivos:
+-----------------------
+
+- Train.py es el archivo que entrena el modelo. Lo guarda en /output
+- app.py es el server que esta escuchando para hacer el predict. Recibo JSON
+- cliente.py es el programa que te hace un post al server para que este le devuelva el predict
+
+Modo de uso:
+-----------
+
+Desde la terminal:
+
+1- floyd login -u pzenone
+
+2- Cargar el dataset: 
+cargar le dataset donde entrenará. Para eso ir a tu pagina de gestion de floydhub. Crear un data set. El nombre que le pongas a eso sera el nombre de referencia (dataset ref). Desde el shell ponerse en la carpeta y darle: floyd data init "dataset ref". Luego en la carpeta donde estas (pwd) ponerle el csv y luego: floyd data upload. Con esto se va a cargar en la nube el dataset
+
+3- Entrenar: cd "Directorio donde estan los archivos de entrenamiento". 
+floyd run --data pzenone/datasets/testdata/2:/dataset "python Train.py"
+
+4- Correr el server:
+floyd run --data pzenone/projects/first-test/47/output:/models --mode serve
+
+5- Inicializar en el directorio donde esta el .py a correr: floyd init "nombre del proyecto". E: floyd init first-test 
+
+6- correr el .py linkeando el datset. floyd --data "path de internet a la carpeta del dataset":"path donde va a estar en la VM" python "nombre del .py"
+ej:  floyd run --data pzenone/datasets/testdata/1:/testdata "python First.py"
+
+7- Dentro del .py se tendria que haber linkeado el output.
+
+Ojo: Si tenes un libreria que note compila en la VM tenes que declararla en floyd_requirements.txt
+
+8- La app de flask debe llamarse app.py
+luego correr: floyd run --data pzenone/projects/first-test/47/output:/models --mode serve
+ver que en data le puse la salida del modelo entrenado!
+
+
+
+
